@@ -5,7 +5,6 @@ import com.laoxie.entity.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-@Mapper
 public interface UserMapper extends BaseMapper<UserInfo> {
     @Select("select * from " +
             "user_info " +
