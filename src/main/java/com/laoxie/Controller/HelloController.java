@@ -4,10 +4,7 @@ import com.laoxie.entity.UserInfo;
 import com.laoxie.mapper.UserMapper;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +31,12 @@ public class HelloController {
         }
         return list;
     }
+
+    @RequestMapping(value = "getUserByname",method = RequestMethod.GET)
+    public UserInfo getUserByName(@RequestParam String name){
+        return userMapper.getUserByName(name);
+    }
+
 
     @GetMapping("getExcel")
     private void getExcel(HttpServletResponse response)throws IOException {
