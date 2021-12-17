@@ -1,7 +1,8 @@
-package com.laoxie.Controller;
+package com.laoxie.controller;
 
 import com.laoxie.entity.UserInfo;
 import com.laoxie.mapper.UserMapper;
+import com.laoxie.service.UserService;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,9 @@ public class HelloController {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private UserService userService;
+
     @RequestMapping(value ="hello",method = RequestMethod.GET)
     public String hello(){
         return "11111";
@@ -25,7 +29,7 @@ public class HelloController {
 
     @RequestMapping(value ="getUser",method = RequestMethod.GET)
     public List<UserInfo>getUser(){
-        List<UserInfo>list = userMapper.selectList(null);
+        List<UserInfo>list = userService.list(null);
         for(UserInfo user:list){
             System.out.println(user);
         }
@@ -34,7 +38,12 @@ public class HelloController {
 
     @RequestMapping(value = "getUserByname",method = RequestMethod.GET)
     public UserInfo getUserByName(@RequestParam String name){
-        return userMapper.getUserByName(name);
+        return userService.getUserByName(name);
+    }
+
+    @RequestMapping(value = "getUsers",method = RequestMethod.GET)
+    public List<UserInfo> getUsers(){
+        return userService.getUserInfos();
     }
 
 
@@ -44,7 +53,7 @@ public class HelloController {
         String fileName="业绩分配信息.xls";
         response.setContentType("application/excel");
         response.setHeader("Content-disposition","attachment;filename=" +fileName +";filename*=utf-8''"+ URLEncoder.encode(fileName,"UTF-8"));
-        List<UserInfo> list=userMapper.selectList(null);
+        List<UserInfo> list=userService.list(null);
         HSSFWorkbook workbook=new HSSFWorkbook();
         HSSFSheet sheet=workbook.createSheet();
 
