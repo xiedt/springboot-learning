@@ -3,6 +3,7 @@ package com.laoxie.controller;
 import com.laoxie.entity.UserInfo;
 import com.laoxie.mapper.UserMapper;
 import com.laoxie.service.UserService;
+import com.laoxie.utils.WriteDBToResourceUtil;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,6 @@ import java.util.List;
 public class HelloController {
 
     @Resource
-    private UserMapper userMapper;
-
-    @Resource
     private UserService userService;
 
     @RequestMapping(value ="hello",method = RequestMethod.GET)
@@ -28,13 +26,30 @@ public class HelloController {
     }
 
     @RequestMapping(value ="getUser",method = RequestMethod.GET)
-    public List<UserInfo>getUser(){
+    public List<UserInfo>getUser() throws Exception{
         List<UserInfo>list = userService.list(null);
-        for(UserInfo user:list){
-            System.out.println(user);
-        }
+
+        String path="src/";
+
+        //把list转成dat数据
+        WriteDBToResourceUtil writeDBToResourceUtils = new WriteDBToResourceUtil();
+        writeDBToResourceUtils.writeToResource(list);
         return list;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @RequestMapping(value = "getUserByname",method = RequestMethod.GET)
     public UserInfo getUserByName(@RequestParam String name){
