@@ -6,11 +6,14 @@ import com.laoxie.service.UserService;
 import com.laoxie.utils.WriteDBToResourceUtil;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -19,6 +22,30 @@ public class HelloController {
 
     @Resource
     private UserService userService;
+
+
+
+    @RequestMapping(value = "execShell",method = RequestMethod.GET)
+    public String execShell()throws Exception{
+        Runtime runtime = Runtime.getRuntime();
+        Process exec = runtime.exec(new String[]{"sh","/test/aa.sh"});
+        exec.waitFor();
+        return "11";
+    }
+
+
+
+    @RequestMapping(value ="getPath",method = RequestMethod.GET)
+    public InputStream getPath(){
+        ClassPathResource classPathResource = new ClassPathResource("static/users.dat");
+        InputStream inputStream = null;
+        try {
+            inputStream = classPathResource.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return inputStream;
+    }
 
     @RequestMapping(value ="hello",method = RequestMethod.GET)
     public String hello(){
@@ -29,27 +56,11 @@ public class HelloController {
     public List<UserInfo>getUser() throws Exception{
         List<UserInfo>list = userService.list(null);
 
-        String path="src/";
-
         //把list转成dat数据
         WriteDBToResourceUtil writeDBToResourceUtils = new WriteDBToResourceUtil();
         writeDBToResourceUtils.writeToResource(list);
         return list;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @RequestMapping(value = "getUserByname",method = RequestMethod.GET)
     public UserInfo getUserByName(@RequestParam String name){
@@ -62,6 +73,11 @@ public class HelloController {
     }
 
 
+    /**
+     * 测试导出excel
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("getExcel")
     private void getExcel(HttpServletResponse response)throws IOException {
 
