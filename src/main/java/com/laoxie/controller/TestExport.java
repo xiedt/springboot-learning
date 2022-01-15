@@ -22,6 +22,13 @@ public class TestExport {
     @Resource
     StudentService studentService;
 
+    @GetMapping("getStudents")
+    private List<StudentInfo> getStudents(){
+
+        //return studentService.list(null);
+        return studentService.getStudentInfo();
+    }
+
     @GetMapping("getExcelByType1")
     private void getExcel1(HttpServletResponse response)throws IOException {
 

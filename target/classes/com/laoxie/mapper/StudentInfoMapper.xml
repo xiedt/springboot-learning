@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laoxie.mapper.StudentInfoMapper">
+
+    <resultMap id="BaseMap1" type="com.laoxie.entity.StudentInfo">
+        <result column="stu_id" property="stuId"/>
+        <result column="stu_nm" property="stuNm"/>
+        <result column="stu_age" property="stuAge"/>
+    </resultMap>
+    <select id="getStudentInfo" resultMap="BaseMap1">
+        select stu_id,stu_nm,stu_age
+        from student_info
+    </select>
+
+
+</mapper>
