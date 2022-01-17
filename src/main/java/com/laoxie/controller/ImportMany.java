@@ -29,7 +29,7 @@ public class ImportMany {
                 pstmt = conn.prepareStatement(sql);
                 //6.不断产生sql
                 for (int i = 0; i < 500000; i++) {
-                    pstmt.setString(1,500002+i+"");
+                    pstmt.setString(1,1000002+i+"");
                     pstmt.setString(2,"aa");
                     pstmt.setInt(3,1);
                     pstmt.addBatch();
