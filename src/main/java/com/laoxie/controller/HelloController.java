@@ -1,8 +1,10 @@
 package com.laoxie.controller;
 
+import com.laoxie.entity.RestMessage;
 import com.laoxie.entity.UserInfo;
 import com.laoxie.mapper.UserMapper;
 import com.laoxie.service.UserService;
+import com.laoxie.utils.NoRepeatSubmit;
 import com.laoxie.utils.WriteDBToResourceUtil;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +49,10 @@ public class HelloController {
         return inputStream;
     }
 
+    @NoRepeatSubmit
     @RequestMapping(value ="hello",method = RequestMethod.GET)
-    public String hello(){
-        return "11111";
+    public RestMessage hello(){
+        return new RestMessage(200,"ok");
     }
 
     @RequestMapping(value ="getUser",method = RequestMethod.GET)

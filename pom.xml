@@ -72,6 +72,17 @@
             <version>build210</version>
         </dependency>
 
+        <!--切面，防止重复提交-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>29.0-jre</version>
+        </dependency>
         <!--日志包-->
         <dependency>
             <groupId>org.slf4j</groupId>
